@@ -1,4 +1,5 @@
 import 'package:doctor_notes/common/header.dart';
+import 'package:doctor_notes/screens/lists/active_list_screen.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatefulWidget {
@@ -9,7 +10,7 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
   final List<Widget> _screens = [
-    Center(child: Text('Active')),
+    ActiveList(),
     Center(child: Text('Patients')),
     Center(child: Text('Archive'))
   ];
