@@ -1,6 +1,7 @@
 import 'package:doctor_notes/common/header.dart';
 import 'package:doctor_notes/screens/lists/active_list_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -24,24 +25,23 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: header(title: 'Doctor Notes'),
-      body: _screens[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: _handleTap,
-        currentIndex: _currentIndex,
-        items: [
-          BottomNavigationBarItem(
-            icon: new Icon(Icons.explore),
-            title: new Text('Active'),
-          ),
-          BottomNavigationBarItem(
-            icon: new Icon(Icons.person),
-            title: new Text('Patients'),
-          ),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.archive), title: Text('Archive'))
-        ],
-      ),
-    );
+        appBar: header(title: 'Doctor Notes'),
+        body: _screens[_currentIndex],
+        bottomNavigationBar: BottomNavigationBar(
+          onTap: _handleTap,
+          currentIndex: _currentIndex,
+          items: [
+            BottomNavigationBarItem(
+              icon: new Icon(Icons.explore),
+              title: new Text('Active'),
+            ),
+            BottomNavigationBarItem(
+              icon: new Icon(Icons.person),
+              title: new Text('Patients'),
+            ),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.archive), title: Text('Archive'))
+          ],
+        ));
   }
 }

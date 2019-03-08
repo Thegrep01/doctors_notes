@@ -1,8 +1,16 @@
-class Client {
+class MyClient {
   final String firstName;
   final String lastName;
   final int status;
-  final int id;
+  final String id;
+  final String telnum;
 
-  Client({this.firstName, this.lastName, this.status, this.id});
+  MyClient({this.firstName, this.lastName, this.status, this.id, this.telnum});
+
+  MyClient.fromJson(Map<String, dynamic> json)
+      : firstName = json['firstname'],
+        lastName = json['lastname'],
+        status = json['status'],
+        id = json['id'],
+        telnum = json['telnum'];
 }
