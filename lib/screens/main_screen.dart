@@ -1,7 +1,5 @@
 import 'package:doctor_notes/common/header.dart';
-import 'package:doctor_notes/screens/lists/active_list_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -11,7 +9,7 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
   final List<Widget> _screens = [
-    ActiveList(),
+    Center(child: Text('Active')),
     Center(child: Text('Patients')),
     Center(child: Text('Archive'))
   ];
@@ -32,12 +30,12 @@ class _MainScreenState extends State<MainScreen> {
           currentIndex: _currentIndex,
           items: [
             BottomNavigationBarItem(
-              icon: new Icon(Icons.explore),
-              title: new Text('Active'),
+              icon: Icon(Icons.explore),
+              title: Text('Active'),
             ),
             BottomNavigationBarItem(
-              icon: new Icon(Icons.person),
-              title: new Text('Patients'),
+              icon: Icon(Icons.person),
+              title: Text('Patients'),
             ),
             BottomNavigationBarItem(
                 icon: Icon(Icons.archive), title: Text('Archive'))
