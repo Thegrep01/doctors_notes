@@ -2,10 +2,10 @@ import 'package:doctor_notes/common/header.dart';
 import 'package:doctor_notes/models/client_model.dart';
 import 'package:flutter/material.dart';
 
-class ActiveList extends StatelessWidget {
+class ListScreen extends StatelessWidget {
   final List<Client> clients;
 
-  ActiveList(this.clients);
+  ListScreen(this.clients);
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +51,7 @@ Widget item(Client client) {
               child: Padding(
                   padding: EdgeInsets.only(left: 20.0),
                   child: Text(
-                    client.id,
+                    client.id.toString(),
                     style: TextStyle(
                         color: Colors.black, fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center,

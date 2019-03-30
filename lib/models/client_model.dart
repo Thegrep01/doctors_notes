@@ -2,7 +2,7 @@ class Client {
   final String firstName;
   final String lastName;
   final int status;
-  final String id;
+  final int id;
   final String telnum;
 
   Client({this.firstName, this.lastName, this.status, this.id, this.telnum});
