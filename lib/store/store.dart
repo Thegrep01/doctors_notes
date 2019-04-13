@@ -6,7 +6,8 @@ import 'package:doctor_notes/store/middlewares/client_epic.dart';
 
 var loginMiddleware = EpicMiddleware(loginEpic);
 var clientMiddleware = EpicMiddleware(clientEpic);
+var noteMiddleware = EpicMiddleware(noteEpic);
 
 final store = Store<AppState>(appStateReducer,
-    initialState: AppState([]),
-    middleware: [loginMiddleware, clientMiddleware]);
+    initialState: AppState([], []),
+    middleware: [loginMiddleware, clientMiddleware, noteMiddleware]);

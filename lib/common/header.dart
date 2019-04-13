@@ -13,3 +13,11 @@ List<Widget> headers() {
     Text("Tel Num", style: TextStyle(fontSize: 14.0, color: Colors.white))
   ];
 }
+
+List<Widget> notesListHeaders() {
+  return [
+    Text("Note Id", style: TextStyle(fontSize: 14.0, color: Colors.white)),
+    Text("Title", style: TextStyle(fontSize: 14.0, color: Colors.white)),
+    Text("Date", style: TextStyle(fontSize: 14.0, color: Colors.white))
+  ];
+}

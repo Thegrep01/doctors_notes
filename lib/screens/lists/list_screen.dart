@@ -1,11 +1,13 @@
 import 'package:doctor_notes/common/header.dart';
 import 'package:doctor_notes/models/client_model.dart';
+import 'package:doctor_notes/screens/lists/note_list_screen.dart';
 import 'package:flutter/material.dart';
 
 class ListScreen extends StatelessWidget {
   final List<Client> clients;
+  final Function getNotes;
 
-  ListScreen(this.clients);
+  ListScreen(this.clients, this.getNotes);
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,7 @@ class ListScreen extends StatelessWidget {
             ) {
               return Container(
                 color: (index % 2 == 0) ? Colors.white : Colors.grey[100],
-                child: item(clients[index]),
+                child: item(clients[index], getNotes, context),
               );
             }, childCount: clients.length),
           ),
@@ -41,9 +43,16 @@ class ListScreen extends StatelessWidget {
   }
 }
 
-Widget item(Client client) {
+Widget item(Client client, Function getNotes, BuildContext context) {
   return ListTile(
-      onTap: () {},
+      onTap: () {
+        getNotes(client.id);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => NoteListScreen()),
+        );
+      },
       contentPadding: EdgeInsets.symmetric(horizontal: 0.0, vertical: 10.0),
       title: Row(
         children: <Widget>[

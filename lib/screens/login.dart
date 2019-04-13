@@ -74,7 +74,7 @@ class _LoginScreenState extends State<LoginScreen> {
           borderRadius: BorderRadius.circular(24),
         ),
         onPressed: () {
-          store.dispatch(LoginPending( payload: {
+          store.dispatch(LoginPending(payload: {
             'login': loginController.text,
             'password': passwordController.text
           }, context: context));
