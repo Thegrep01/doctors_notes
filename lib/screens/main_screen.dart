@@ -2,7 +2,6 @@ import 'package:doctor_notes/common/header.dart';
 import 'package:doctor_notes/models/client_model.dart';
 import 'package:doctor_notes/screens/lists/list_screen.dart';
 import 'package:doctor_notes/store/actions/client_actions.dart';
-import 'package:doctor_notes/store/actions/notes_action.dart';
 import 'package:doctor_notes/store/reducers/reducer.dart';
 import 'package:doctor_notes/store/store.dart';
 import 'package:flutter/material.dart';
@@ -10,8 +9,8 @@ import 'package:flutter_redux/flutter_redux.dart';
 
 class _ViewModel {
   final List<Client> clients;
-  final Function getNotes;
-  _ViewModel({this.clients, this.getNotes});
+
+  _ViewModel({this.clients});
 }
 
 class MainScreen extends StatefulWidget {
@@ -40,12 +39,12 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return StoreConnector<AppState, _ViewModel>(
         converter: (store) => _ViewModel(
-            clients: store.state.clients,
-            getNotes: (int id) => store.dispatch(GetNotesPending(id))),
+              clients: store.state.clients,
+            ),
         builder: (context, state) {
           return Scaffold(
               appBar: header(title: 'Doctor Notes'),
-              body: ListScreen(state.clients, state.getNotes),
+              body: ListScreen(state.clients),
               bottomNavigationBar: BottomNavigationBar(
                 onTap: _handleTap,
                 currentIndex: _currentIndex,
