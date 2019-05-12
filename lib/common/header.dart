@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
-AppBar header({title}) {
+AppBar header({title, actions}) {
   return AppBar(
-    title: Text(title),
+    title: Text(title ?? ''),
+    actions: actions ?? [],
   );
 }
 

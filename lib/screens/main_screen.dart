@@ -23,7 +23,8 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   void initState() {
-    store.dispatch(GetClientPending(docId: 1, status: 0));
+    // TODO: get from store docID
+    store.dispatch(GetClientsPending(docId: 1, status: 0));
     _currentIndex = 0;
     super.initState();
   }
@@ -31,7 +32,8 @@ class _MainScreenState extends State<MainScreen> {
   void _handleTap(int index) {
     setState(() {
       _currentIndex = index;
-      store.dispatch(GetClientPending(docId: 1, status: index));
+      // TODO: get from store docID
+      store.dispatch(GetClientsPending(docId: 1, status: index));
     });
   }
 

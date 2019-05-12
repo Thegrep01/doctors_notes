@@ -6,8 +6,12 @@ import 'package:doctor_notes/store/reducers/note_reducer.dart';
 class AppState {
   final List<Client> clients;
   final List<Note> notes;
-  AppState(this.clients, this.notes);
+  final Client client;
+
+  AppState(this.clients, this.notes, this.client);
 }
 
 AppState appStateReducer(AppState state, action) => AppState(
-    clientReducer(state.clients, action), noteReducer(state.notes, action));
+    clientsReducer(state.clients, action),
+    noteReducer(state.notes, action),
+    clientReducer(state.client, action));

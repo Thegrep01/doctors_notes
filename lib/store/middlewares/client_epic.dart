@@ -5,9 +5,9 @@ import 'package:doctor_notes/store/actions/client_actions.dart';
 import 'package:redux_epics/redux_epics.dart';
 
 Stream<dynamic> clientEpic(Stream<dynamic> actions, EpicStore<dynamic> store) {
-  return actions.where((action) => action is GetClientPending).asyncMap(
+  return actions.where((action) => action is GetClientsPending).asyncMap(
       (action) => getClients(action.docId, action.status).then((data) {
-            return GetClientSuccess(data);
+            return GetClientsSuccess(data);
           }).catchError((error) {
             return null;
           }));
