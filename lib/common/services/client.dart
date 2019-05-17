@@ -14,3 +14,16 @@ Future<List<Client>> getClients(int docId, int status) async {
     throw Exception('Failed to get clients');
   }
 }
+
+Future<Client> getClient(int id) async {
+  http.Response response =
+      await http.get('http://localhost:3000/client/clientInfo?id=$id');
+  if (response.statusCode == 200) {
+    final res = json.decode(response.body);
+    var tmp = Client.fromJson(res['data']);
+    print(tmp.problems);
+    return Client.fromJson(res['data']);
+  } else {
+    throw Exception('Failed to get clients');
+  }
+}

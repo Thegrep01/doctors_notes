@@ -7,15 +7,17 @@ import 'package:redux_epics/redux_epics.dart';
 import './reducers/reducer.dart';
 
 var loginMiddleware = EpicMiddleware(loginEpic);
-var clientMiddleware = EpicMiddleware(clientEpic);
+var clientsMiddleware = EpicMiddleware(clientEpic);
 var noteMiddleware = EpicMiddleware(noteEpic);
 var createNoteMiddleware = EpicMiddleware(createNoteEpic);
+var clientMiddleware = EpicMiddleware(clientDetailEpic);
 
 final store = Store<AppState>(appStateReducer,
     initialState: AppState([], [], null),
     middleware: [
       loginMiddleware,
-      clientMiddleware,
+      clientsMiddleware,
       noteMiddleware,
-      createNoteMiddleware
+      createNoteMiddleware,
+      clientMiddleware
     ]);

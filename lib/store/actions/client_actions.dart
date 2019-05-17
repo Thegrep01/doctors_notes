@@ -32,3 +32,10 @@ class GetClientSuccess {
 class GetClientFail {
   GetClientFail();
 }
+
+class UpdateClient {
+  final int id;
+  final Client payload;
+
+  UpdateClient({this.id, this.payload});
+}

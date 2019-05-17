@@ -12,3 +12,14 @@ Stream<dynamic> clientEpic(Stream<dynamic> actions, EpicStore<dynamic> store) {
             return null;
           }));
 }
+
+Stream<dynamic> clientDetailEpic(
+    Stream<dynamic> actions, EpicStore<dynamic> store) {
+  return actions
+      .where((action) => action is GetClientPending)
+      .asyncMap((action) => getClient(action.payload).then((data) {
+            return GetClientSuccess(data);
+          }).catchError((error) {
+            return null;
+          }));
+}

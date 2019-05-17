@@ -20,6 +20,7 @@ class GetNotesFail {
 class CreateNotePending {
   final Note payload;
   final BuildContext context;
+  final String diagnos;
 
-  CreateNotePending(this.payload, this.context);
+  CreateNotePending(this.payload, this.context, this.diagnos);
 }

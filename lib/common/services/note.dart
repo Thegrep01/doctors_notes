@@ -15,10 +15,14 @@ Future<List<Note>> getNotes(int id) async {
   }
 }
 
-Future<Null> createNote(Note note, BuildContext context) async {
+Future<Null> createNote(Note note, BuildContext context, String diagnos) async {
   http.Response response = await http.post('http://localhost:3000/client/note',
-      body: json.encode(note.toJson()),
+      body: json.encode(
+        {"note": note.toJson(), "diagnos": diagnos},
+      ),
       headers: {'Content-type': 'application/json'});
+  print(response.statusCode);
+
   if (response.statusCode == 200) {
     Navigator.of(context).pop();
     return;

@@ -9,9 +9,17 @@ class _ViewModel {
   final String diagnos;
   final int height;
   final int weigth;
+  final String pressure;
+  final String temperature;
 
   _ViewModel(
-      {this.firstName, this.lastName, this.diagnos, this.height, this.weigth});
+      {this.firstName,
+      this.lastName,
+      this.diagnos,
+      this.height,
+      this.weigth,
+      this.pressure,
+      this.temperature});
 }
 
 class ClientDetails extends StatelessWidget {
@@ -21,9 +29,13 @@ class ClientDetails extends StatelessWidget {
       converter: (store) => _ViewModel(
           firstName: store.state.client.firstName,
           lastName: store.state.client.lastName,
-          diagnos: store.state.client.problems[0],
+          diagnos: store.state.client.problems != null
+              ? store.state.client.problems.last
+              : 'No diagnos',
           height: store.state.client.height,
-          weigth: store.state.client.weigth),
+          weigth: store.state.client.weigth,
+          pressure: store.state.client.pressure,
+          temperature: store.state.client.temperature),
       builder: (context, state) {
         return Scaffold(
           appBar: header(),
@@ -38,7 +50,13 @@ class ClientDetails extends StatelessWidget {
               Text('Height: ${state.height.toString()}',
                   textAlign: TextAlign.center),
               SizedBox(height: 10),
-              Text('Weigth: ${state.weigth.toString()}',
+              Text('Weigth: ${state.weigth ?? '0'}',
+                  textAlign: TextAlign.center),
+              SizedBox(height: 10),
+              Text('Last arterial pressure: ${state.pressure ?? '0'}',
+                  textAlign: TextAlign.center),
+              SizedBox(height: 10),
+              Text('Last temperature: ${state.temperature.toString()}',
                   textAlign: TextAlign.center),
               SizedBox(height: 10),
               Text('Last diagnos: ${state.diagnos}',

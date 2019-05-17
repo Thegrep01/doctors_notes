@@ -15,7 +15,8 @@ Stream<dynamic> noteEpic(Stream<dynamic> actions, EpicStore<dynamic> store) {
 Stream<dynamic> createNoteEpic(
     Stream<dynamic> actions, EpicStore<dynamic> store) {
   return actions.where((action) => action is CreateNotePending).asyncMap(
-      (action) => createNote(action.payload, action.context).then((data) {
+      (action) => createNote(action.payload, action.context, action.diagnos)
+              .then((data) {
             return GetNotesPending(action.payload.clientId);
           }).catchError((error) {
             return null;

@@ -6,7 +6,9 @@ class Client {
   final String telnum;
   final int height;
   final int weigth;
-  final List<String> problems;
+  final problems;
+  final String pressure;
+  final String temperature;
 
   Client(
       {this.firstName,
@@ -16,7 +18,9 @@ class Client {
       this.telnum,
       this.height,
       this.problems,
-      this.weigth});
+      this.weigth,
+      this.pressure,
+      this.temperature});
 
   Client.fromJson(Map<String, dynamic> json)
       : firstName = json['firstname'],
@@ -26,5 +30,7 @@ class Client {
         telnum = json['telnum'],
         height = json['height'],
         weigth = json['weigth'],
-        problems = json['problems'];
+        problems = json['problems'],
+        pressure = json['pressure'],
+        temperature = json['temperature'];
 }
