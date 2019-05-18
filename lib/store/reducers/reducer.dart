@@ -7,11 +7,13 @@ class AppState {
   final List<Client> clients;
   final List<Note> notes;
   final Client client;
+  final List<String> dates;
 
-  AppState(this.clients, this.notes, this.client);
+  AppState(this.clients, this.notes, this.client, this.dates);
 }
 
 AppState appStateReducer(AppState state, action) => AppState(
     clientsReducer(state.clients, action),
     noteReducer(state.notes, action),
-    clientReducer(state.client, action));
+    clientReducer(state.client, action),
+    datesReducer(state.dates, action));

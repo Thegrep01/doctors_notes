@@ -14,8 +14,9 @@ class _ViewModel {
   final Function createNote;
   final Client client;
   final Function updateClient;
+  final List<String> dates;
 
-  _ViewModel({this.createNote, this.client, this.updateClient});
+  _ViewModel({this.createNote, this.client, this.updateClient, this.dates});
 }
 
 class CreateScreen extends StatefulWidget {
@@ -53,6 +54,7 @@ class _CreateSreenState extends State<CreateScreen> {
   Widget build(BuildContext context) {
     return StoreConnector<AppState, _ViewModel>(
       converter: (store) => _ViewModel(
+          dates: store.state.dates,
           client: store.state.client,
           updateClient: (int id, data) =>
               store.dispatch(UpdateClient(id: id, payload: data)),
@@ -143,7 +145,10 @@ class _CreateSreenState extends State<CreateScreen> {
                                     clientId: widget.clId,
                                     activityCode: _codeSelection,
                                     medication: _medication.text,
-                                    note: _note.text),
+                                    note: _note.text,
+                                    dateService: state.dates[0],
+                                    startTime: state.dates[1],
+                                    endTime: state.dates[2]),
                                 context,
                                 _diagnos.text,
                               );

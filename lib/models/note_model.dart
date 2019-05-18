@@ -6,6 +6,9 @@ class Note {
   final String date;
   final int clientId;
   final String activityCode;
+  final String dateService;
+  final String startTime;
+  final String endTime;
 
   Note(
       {this.id,
@@ -14,7 +17,10 @@ class Note {
       this.clientId,
       this.activityCode,
       this.medication,
-      this.note});
+      this.note,
+      this.dateService,
+      this.endTime,
+      this.startTime});
 
   Note.fromJson(Map<String, dynamic> json)
       : id = json['id'],
@@ -23,7 +29,10 @@ class Note {
         medication = json['medication'],
         activityCode = json['activityCode'],
         date = json['date'],
-        clientId = json['CLientID'];
+        clientId = json['CLientID'],
+        dateService = json['dateService'],
+        endTime = json['endTime'],
+        startTime = json['startTime'];
 
   Map<String, dynamic> toJson() => {
         'title': title,
@@ -31,6 +40,9 @@ class Note {
         'medication': medication,
         'date': date,
         'clientId': clientId,
-        'activityCode': activityCode
+        'activityCode': activityCode,
+        'dateService': dateService,
+        'endTime': endTime,
+        'startTime': startTime
       };
 }

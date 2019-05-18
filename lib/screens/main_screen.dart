@@ -59,8 +59,6 @@ class _MainScreenState extends State<MainScreen> {
                     icon: Icon(Icons.person),
                     title: Text('Patients'),
                   ),
-                  BottomNavigationBarItem(
-                      icon: Icon(Icons.archive), title: Text('Archive'))
                 ],
               ));
         });
