@@ -9,7 +9,9 @@ Future<List<Client>> getClients(int docId, int status) async {
       .get('http://localhost:3000/client/clients?docId=$docId&status=$status');
   if (response.statusCode == 200) {
     final res = json.decode(response.body);
-    return res['data'].map<Client>((item) => Client.fromJson(item)).toList();
+    return res['data']
+        .map<Client>((item) => Client.fromJson(item, null))
+        .toList();
   } else {
     throw Exception('Failed to get clients');
   }
@@ -20,9 +22,12 @@ Future<Client> getClient(int id) async {
       await http.get('http://localhost:3000/client/clientInfo?id=$id');
   if (response.statusCode == 200) {
     final res = json.decode(response.body);
-    var tmp = Client.fromJson(res['data']);
-    print(tmp.problems);
-    return Client.fromJson(res['data']);
+    List<Diagnosis> tmp = res['data']['problems']
+        .map<Diagnosis>((i) => Diagnosis.fromJson(i))
+        .toList();
+    Client client = Client.fromJson(res['data'], tmp);
+    print(client.firstName);
+    return client;
   } else {
     throw Exception('Failed to get clients');
   }

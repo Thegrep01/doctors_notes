@@ -6,7 +6,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 class _ViewModel {
   final String firstName;
   final String lastName;
-  final String diagnos;
+  final List<dynamic> diagnos;
   final int height;
   final int weigth;
   final String pressure;
@@ -29,9 +29,7 @@ class ClientDetails extends StatelessWidget {
       converter: (store) => _ViewModel(
           firstName: store.state.client.firstName,
           lastName: store.state.client.lastName,
-          diagnos: store.state.client.problems != null
-              ? store.state.client.problems.last
-              : 'No diagnos',
+          diagnos: store.state.client.problems,
           height: store.state.client.height,
           weigth: store.state.client.weigth,
           pressure: store.state.client.pressure,
@@ -59,7 +57,8 @@ class ClientDetails extends StatelessWidget {
               Text('Last temperature: ${state.temperature.toString()}',
                   textAlign: TextAlign.center),
               SizedBox(height: 10),
-              Text('Last diagnos: ${state.diagnos}',
+              Text(
+                  'Last diagnos: ${state.diagnos != null ? state.diagnos.last : 'No diagnos'}',
                   textAlign: TextAlign.center),
               SizedBox(height: 10),
               SizedBox(
@@ -67,7 +66,9 @@ class ClientDetails extends StatelessWidget {
                 child: FlatButton(
                     child:
                         Text('History', style: TextStyle(color: Colors.white)),
-                    onPressed: () {},
+                    onPressed: () {
+                      _dialog(context, state.diagnos);
+                    },
                     color: Theme.of(context).primaryColor),
               ),
             ],
@@ -75,5 +76,36 @@ class ClientDetails extends StatelessWidget {
         );
       },
     );
+  }
+
+  void _dialog(BuildContext context, List<dynamic> diagnosis) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            content: Container(
+                height: 500,
+                width: 100,
+                child: Column(
+                  children: <Widget>[
+                    Text('List of diagnoses'),
+                    Flexible(
+                      child: ListView.builder(
+                        itemBuilder: (BuildContext context, int index) {
+                          return ListTile(
+                            title: Text(diagnosis[index].name),
+                            subtitle: Text('${diagnosis[index].date}'),
+                          );
+                        },
+                        itemCount: diagnosis.length,
+                      ),
+                    ),
+                  ],
+                )),
+            elevation: 0.5,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0)),
+          );
+        });
   }
 }

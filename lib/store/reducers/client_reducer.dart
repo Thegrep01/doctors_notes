@@ -23,7 +23,6 @@ dynamic clientReducer(state, action) {
   }
 
   if (action is GetClientSuccess) {
-    print(action.payload.problems);
     return action.payload;
   }
 

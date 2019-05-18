@@ -6,7 +6,7 @@ class Client {
   final String telnum;
   final int height;
   final int weigth;
-  final problems;
+  List<Diagnosis> problems;
   final String pressure;
   final String temperature;
 
@@ -22,7 +22,7 @@ class Client {
       this.pressure,
       this.temperature});
 
-  Client.fromJson(Map<String, dynamic> json)
+  Client.fromJson(Map<String, dynamic> json, List<Diagnosis> prob)
       : firstName = json['firstname'],
         lastName = json['lastname'],
         status = json['status'],
@@ -30,7 +30,18 @@ class Client {
         telnum = json['telnum'],
         height = json['height'],
         weigth = json['weigth'],
-        problems = json['problems'],
         pressure = json['pressure'],
+        problems = prob,
         temperature = json['temperature'];
+}
+
+class Diagnosis {
+  final String name;
+  final String date;
+
+  Diagnosis(this.name, this.date);
+
+  Diagnosis.fromJson(Map<String, dynamic> json)
+      : name = json['name'],
+        date = json['date'];
 }
