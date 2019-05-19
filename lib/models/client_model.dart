@@ -29,10 +29,16 @@ class Client {
         id = json['id'],
         telnum = json['telnum'],
         height = json['height'],
-        weigth = json['weigth'],
+        weigth = json['weight'],
         pressure = json['pressure'],
         problems = prob,
         temperature = json['temperature'];
+
+  Map<String, dynamic> toJson() => {
+        'weight': weigth ?? '',
+        'pressure': pressure ?? '',
+        'temperature': temperature ?? ''
+      };
 }
 
 class Diagnosis {

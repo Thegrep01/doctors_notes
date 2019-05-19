@@ -4,6 +4,7 @@ AppBar header({title, actions}) {
   return AppBar(
     title: Text(title ?? ''),
     actions: actions ?? [],
+    centerTitle: true,
   );
 }
 

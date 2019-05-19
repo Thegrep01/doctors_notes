@@ -26,7 +26,24 @@ Future<Client> getClient(int id) async {
         .map<Diagnosis>((i) => Diagnosis.fromJson(i))
         .toList();
     Client client = Client.fromJson(res['data'], tmp);
-    print(client.firstName);
+    return client;
+  } else {
+    throw Exception('Failed to get clients');
+  }
+}
+
+Future<Client> updateClient(int id, Client client) async {
+  print(json.encode({'data': json.encode(client.toJson())}));
+  http.Response response = await http.put(
+      'http://localhost:3000/client/updateClient?id=$id&weight=${client.weigth}&pressure=${client.pressure}&status=${client.status}',
+      body: json.encode(client.toJson()));
+
+  if (response.statusCode == 200) {
+    final res = json.decode(response.body);
+    List<Diagnosis> tmp = res['data']['problems']
+        .map<Diagnosis>((i) => Diagnosis.fromJson(i))
+        .toList();
+    Client client = Client.fromJson(res['data'], tmp);
     return client;
   } else {
     throw Exception('Failed to get clients');

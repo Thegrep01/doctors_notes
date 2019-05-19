@@ -5,8 +5,9 @@ import 'package:flutter/material.dart';
 
 class ListScreen extends StatelessWidget {
   final List<Client> clients;
+  final int status;
 
-  ListScreen(this.clients);
+  ListScreen(this.clients, this.status);
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,7 @@ class ListScreen extends StatelessWidget {
             ) {
               return Container(
                 color: (index % 2 == 0) ? Colors.white : Colors.grey[100],
-                child: item(clients[index], context),
+                child: item(clients[index], context, status),
               );
             }, childCount: clients.length),
           ),
@@ -42,14 +43,14 @@ class ListScreen extends StatelessWidget {
   }
 }
 
-Widget item(Client client, BuildContext context) {
+Widget item(Client client, BuildContext context, status) {
   return ListTile(
       onTap: () {
         Navigator.push(
           context,
           MaterialPageRoute(
               builder: (context) => NoteListScreen(
-                  client.id, client.firstName + client.lastName)),
+                  client.id, client.firstName + client.lastName, status)),
         );
       },
       contentPadding: EdgeInsets.symmetric(horizontal: 0.0, vertical: 10.0),

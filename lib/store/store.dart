@@ -12,7 +12,7 @@ var notesMiddleware = EpicMiddleware(notesEpic);
 var noteMiddleware = EpicMiddleware(noteEpic);
 var createNoteMiddleware = EpicMiddleware(createNoteEpic);
 var clientMiddleware = EpicMiddleware(clientDetailEpic);
-
+var updateMiddleware = EpicMiddleware(updateClientDetailEpic);
 final store = Store<AppState>(appStateReducer,
     initialState: AppState([], [], null, [null, null, null], null),
     middleware: [
@@ -21,5 +21,6 @@ final store = Store<AppState>(appStateReducer,
       noteMiddleware,
       createNoteMiddleware,
       clientMiddleware,
-      notesMiddleware
+      notesMiddleware,
+      updateMiddleware
     ]);

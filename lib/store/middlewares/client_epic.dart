@@ -23,3 +23,13 @@ Stream<dynamic> clientDetailEpic(
             return null;
           }));
 }
+
+Stream<dynamic> updateClientDetailEpic(
+    Stream<dynamic> actions, EpicStore<dynamic> store) {
+  return actions.where((action) => action is UpdateClient).asyncMap(
+      (action) => updateClient(action.id, action.payload).then((data) {
+            return UpdateSuccess(data);
+          }).catchError((error) {
+            return null;
+          }));
+}

@@ -46,7 +46,7 @@ class _MainScreenState extends State<MainScreen> {
         builder: (context, state) {
           return Scaffold(
               appBar: header(title: 'Doctor Notes'),
-              body: ListScreen(state.clients),
+              body: ListScreen(state.clients, _currentIndex),
               bottomNavigationBar: BottomNavigationBar(
                 onTap: _handleTap,
                 currentIndex: _currentIndex,

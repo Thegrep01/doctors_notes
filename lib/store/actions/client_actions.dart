@@ -39,3 +39,9 @@ class UpdateClient {
 
   UpdateClient({this.id, this.payload});
 }
+
+class UpdateSuccess {
+  final Client payload;
+
+  UpdateSuccess(this.payload);
+}

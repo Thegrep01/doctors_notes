@@ -1,8 +1,10 @@
 import 'package:doctor_notes/common/header.dart';
+import 'package:doctor_notes/models/client_model.dart';
 import 'package:doctor_notes/models/note_model.dart';
 import 'package:doctor_notes/screens/clientDetails_screen.dart';
 import 'package:doctor_notes/screens/create_screen.dart';
 import 'package:doctor_notes/screens/noteDetails_screen.dart';
+import 'package:doctor_notes/store/actions/client_actions.dart';
 import 'package:doctor_notes/store/actions/notes_action.dart';
 import 'package:doctor_notes/store/reducers/reducer.dart';
 import 'package:doctor_notes/store/store.dart';
@@ -12,15 +14,17 @@ import 'package:flutter_redux/flutter_redux.dart';
 
 class _ViewModel {
   final List<Note> notes;
+  final Function changeStatus;
 
-  _ViewModel({this.notes});
+  _ViewModel({this.notes, this.changeStatus});
 }
 
 class NoteListScreen extends StatefulWidget {
   final int clientId;
   final String clientName;
+  final int status;
 
-  NoteListScreen(this.clientId, this.clientName);
+  NoteListScreen(this.clientId, this.clientName, this.status);
 
   @override
   _NoteListScreenState createState() => _NoteListScreenState();
@@ -36,10 +40,23 @@ class _NoteListScreenState extends State<NoteListScreen> {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, _ViewModel>(
-        converter: (store) => _ViewModel(notes: store.state.notes),
+        converter: (store) => _ViewModel(
+            notes: store.state.notes,
+            changeStatus: (int id) => store.dispatch(
+                UpdateClient(id: widget.clientId, payload: Client(status: 1)))),
         builder: (context, state) {
           return Scaffold(
               appBar: header(title: 'Doctor Notes', actions: [
+                widget.status == 0
+                    ? IconButton(
+                        icon: Icon(Icons.check),
+                        onPressed: () {
+                          state.changeStatus(widget.clientId);
+                          store
+                              .dispatch(GetClientsPending(docId: 1, status: 0));
+                          Navigator.pop(context);
+                        })
+                    : Container(),
                 IconButton(
                     icon: Icon(Icons.info_outline),
                     onPressed: () {

@@ -35,9 +35,9 @@ class _CreateSreenState extends State<CreateScreen> {
   TextEditingController _medication = TextEditingController(text: '');
   TextEditingController _note = TextEditingController(text: '');
   TextEditingController _diagnos = TextEditingController(text: '');
-  TextEditingController _weigth = TextEditingController(text: '');
-  TextEditingController _pressure = TextEditingController(text: '');
-  TextEditingController _temperature = TextEditingController(text: '');
+  TextEditingController _weigth;
+  TextEditingController _pressure;
+  TextEditingController _temperature;
 
   final dropdownActivityGoals = MockData.codeItems
       .map((String item) =>
@@ -65,101 +65,107 @@ class _CreateSreenState extends State<CreateScreen> {
           appBar: header(title: 'Create Note'),
           body: Padding(
             padding: const EdgeInsets.all(20.0),
-            child: Form(
-              key: _formKey,
-              child: ListView(
-                children: <Widget>[
-                  DatePickers(),
-                  Divider(color: Colors.black),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 30.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          'Activity code',
-                          style: TextStyle(fontSize: 18.0),
-                        ),
-                        DropdownButtonHideUnderline(
-                          child: DropdownButton<String>(
-                            value: _codeSelection,
-                            items: dropdownActivityGoals,
-                            onChanged: (s) {
-                              setState(
-                                () {
-                                  _codeSelection = s;
-                                },
-                              );
-                            },
-                          ),
-                        ),
-                        Center(
-                          child: FlatButton(
-                            color: Theme.of(context).primaryColor,
-                            child: Text(
-                              'Client info',
-                              style: TextStyle(color: Colors.white),
+            child: Center(
+              child: state.client == null
+                  ? CircularProgressIndicator()
+                  : Form(
+                      key: _formKey,
+                      child: ListView(
+                        children: <Widget>[
+                          DatePickers(),
+                          Divider(color: Colors.black),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 30.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  'Activity code',
+                                  style: TextStyle(fontSize: 18.0),
+                                ),
+                                DropdownButtonHideUnderline(
+                                  child: DropdownButton<String>(
+                                    value: _codeSelection,
+                                    items: dropdownActivityGoals,
+                                    onChanged: (s) {
+                                      setState(
+                                        () {
+                                          _codeSelection = s;
+                                        },
+                                      );
+                                    },
+                                  ),
+                                ),
+                                Center(
+                                  child: FlatButton(
+                                    color: Theme.of(context).primaryColor,
+                                    child: Text(
+                                      'Client info',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                    onPressed: () {
+                                      _dialog(context, state.client,
+                                          state.updateClient);
+                                    },
+                                  ),
+                                ),
+                                TextFormField(
+                                  controller: _medication,
+                                  maxLines: null,
+                                  keyboardType: TextInputType.multiline,
+                                  decoration:
+                                      InputDecoration(hintText: 'Medication'),
+                                ),
+                                SizedBox(height: 25),
+                                TextFormField(
+                                  controller: _diagnos,
+                                  maxLines: null,
+                                  keyboardType: TextInputType.multiline,
+                                  decoration:
+                                      InputDecoration(hintText: 'Diagnos'),
+                                ),
+                                SizedBox(height: 25),
+                                TextFormField(
+                                  controller: _note,
+                                  maxLines: null,
+                                  keyboardType: TextInputType.multiline,
+                                  decoration: InputDecoration(hintText: 'Note'),
+                                ),
+                                SizedBox(height: 25),
+                                Center(
+                                  child: RaisedButton(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(24),
+                                    ),
+                                    color: Color.fromRGBO(20, 137, 124, 1),
+                                    child: Text(
+                                      'Submit',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                    onPressed: () {
+                                      state.createNote(
+                                        Note(
+                                            title: widget.name,
+                                            clientId: widget.clId,
+                                            activityCode: _codeSelection,
+                                            medication: _medication.text,
+                                            note: _note.text,
+                                            dateService: state.dates[0],
+                                            startTime: state.dates[1],
+                                            endTime: state.dates[2]),
+                                        context,
+                                        _diagnos.text,
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ],
                             ),
-                            onPressed: () {
-                              _dialog(
-                                  context, state.client, state.updateClient);
-                            },
                           ),
-                        ),
-                        TextFormField(
-                          controller: _medication,
-                          maxLines: null,
-                          keyboardType: TextInputType.multiline,
-                          decoration: InputDecoration(hintText: 'Medication'),
-                        ),
-                        SizedBox(height: 25),
-                        TextFormField(
-                          controller: _diagnos,
-                          maxLines: null,
-                          keyboardType: TextInputType.multiline,
-                          decoration: InputDecoration(hintText: 'Diagnos'),
-                        ),
-                        SizedBox(height: 25),
-                        TextFormField(
-                          controller: _note,
-                          maxLines: null,
-                          keyboardType: TextInputType.multiline,
-                          decoration: InputDecoration(hintText: 'Note'),
-                        ),
-                        SizedBox(height: 25),
-                        Center(
-                          child: RaisedButton(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(24),
-                            ),
-                            color: Color.fromRGBO(20, 137, 124, 1),
-                            child: Text(
-                              'Submit',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            onPressed: () {
-                              state.createNote(
-                                Note(
-                                    title: widget.name,
-                                    clientId: widget.clId,
-                                    activityCode: _codeSelection,
-                                    medication: _medication.text,
-                                    note: _note.text,
-                                    dateService: state.dates[0],
-                                    startTime: state.dates[1],
-                                    endTime: state.dates[2]),
-                                context,
-                                _diagnos.text,
-                              );
-                            },
-                          ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              ),
             ),
           ),
         );
@@ -168,6 +174,12 @@ class _CreateSreenState extends State<CreateScreen> {
   }
 
   void _dialog(BuildContext context, Client client, update) {
+    _weigth = TextEditingController(
+        text: client.weigth != null ? client.weigth.toString() : '0');
+    _pressure = TextEditingController(
+        text: client.pressure != null ? client.pressure.toString() : '0');
+    _temperature =
+        TextEditingController(text: client.temperature.toString() ?? '');
     showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -178,28 +190,22 @@ class _CreateSreenState extends State<CreateScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
                   TextFormField(
-                    initialValue: client.height.toString(),
+                    initialValue: client.height.toString() ?? '',
                     enabled: false,
                     decoration: InputDecoration(prefix: Text('Height  ')),
                   ),
                   TextFormField(
-                    controller: this._weigth,
-                    initialValue:
-                        client.weigth != null ? client.weigth.toString() : '0',
+                    controller: _weigth,
                     decoration: InputDecoration(
                         prefix: Text('Weigth  '), hintText: 'Weigth'),
                   ),
                   TextFormField(
-                    controller: this._pressure,
-                    initialValue: client.pressure != null
-                        ? client.pressure.toString()
-                        : '0',
+                    controller: _pressure,
                     decoration: InputDecoration(
                         prefix: Text('Pressure  '), hintText: 'Pressure'),
                   ),
                   TextFormField(
-                    controller: this._temperature,
-                    initialValue: client.temperature.toString(),
+                    controller: _temperature,
                     decoration: InputDecoration(prefix: Text('Temperature  ')),
                   ),
                   RaisedButton(
@@ -214,6 +220,8 @@ class _CreateSreenState extends State<CreateScreen> {
                               temperature: _temperature.text,
                               pressure: _pressure.text,
                               weigth: int.parse(_weigth.text)));
+                      store.dispatch(GetClientPending(client.id));
+                      Navigator.pop(context);
                     },
                     color: Theme.of(context).primaryColor,
                   )

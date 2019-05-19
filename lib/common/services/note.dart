@@ -32,7 +32,6 @@ Future<Null> createNote(Note note, BuildContext context, String diagnos) async {
         {"note": note.toJson(), "diagnos": diagnos},
       ),
       headers: {'Content-type': 'application/json'});
-  print(response.statusCode);
 
   if (response.statusCode == 200) {
     Navigator.of(context).pop();
