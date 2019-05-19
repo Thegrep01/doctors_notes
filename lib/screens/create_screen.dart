@@ -151,9 +151,21 @@ class _CreateSreenState extends State<CreateScreen> {
                                             activityCode: _codeSelection,
                                             medication: _medication.text,
                                             note: _note.text,
-                                            dateService: state.dates[0],
-                                            startTime: state.dates[1],
-                                            endTime: state.dates[2]),
+                                            dateService: state.dates[0] != null
+                                                ? state.dates[0]
+                                                : DateTime.now()
+                                                    .toString()
+                                                    .substring(0, 10),
+                                            startTime: state.dates[1] != null
+                                                ? state.dates[1]
+                                                : DateTime.now()
+                                                    .toString()
+                                                    .substring(10, 15),
+                                            endTime: state.dates[2] != null
+                                                ? state.dates[2]
+                                                : DateTime.now()
+                                                    .toString()
+                                                    .substring(10, 15)),
                                         context,
                                         _diagnos.text,
                                       );
