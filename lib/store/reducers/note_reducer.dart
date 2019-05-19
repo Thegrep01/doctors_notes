@@ -1,7 +1,7 @@
 import 'package:doctor_notes/store/actions/datePickers_actions.dart';
 import 'package:doctor_notes/store/actions/notes_action.dart';
 
-dynamic noteReducer(state, action) {
+dynamic notesReducer(state, action) {
   if (action is GetNotesPending) {
     return state;
   }
@@ -14,6 +14,16 @@ dynamic noteReducer(state, action) {
     return [];
   }
 
+  return state;
+}
+
+dynamic noteReducer(state, action) {
+  if (action is GetNoteInfo) {
+    return state;
+  }
+  if (action is GetNoteInfoSuccess) {
+    return action.payload;
+  }
   return state;
 }
 

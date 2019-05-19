@@ -24,3 +24,15 @@ class CreateNotePending {
 
   CreateNotePending(this.payload, this.context, this.diagnos);
 }
+
+class GetNoteInfo {
+  final int payload;
+
+  GetNoteInfo(this.payload);
+}
+
+class GetNoteInfoSuccess {
+  final Note payload;
+
+  GetNoteInfoSuccess(this.payload);
+}

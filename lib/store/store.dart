@@ -8,16 +8,18 @@ import './reducers/reducer.dart';
 
 var loginMiddleware = EpicMiddleware(loginEpic);
 var clientsMiddleware = EpicMiddleware(clientEpic);
+var notesMiddleware = EpicMiddleware(notesEpic);
 var noteMiddleware = EpicMiddleware(noteEpic);
 var createNoteMiddleware = EpicMiddleware(createNoteEpic);
 var clientMiddleware = EpicMiddleware(clientDetailEpic);
 
 final store = Store<AppState>(appStateReducer,
-    initialState: AppState([], [], null, [null, null, null]),
+    initialState: AppState([], [], null, [null, null, null], null),
     middleware: [
       loginMiddleware,
       clientsMiddleware,
       noteMiddleware,
       createNoteMiddleware,
-      clientMiddleware
+      clientMiddleware,
+      notesMiddleware
     ]);

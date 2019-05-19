@@ -7,9 +7,6 @@ class _ViewModel {
   final Function confirmSelectedDate;
   final Function confirmStartTime;
   final Function confirmEndTime;
-
-//   final bool isView;
-//   final bool isEdit;
   String selectedDateFromStore;
   String selectedStartTimeFromStore;
   String selectedEndTimeFromStore;
@@ -17,8 +14,6 @@ class _ViewModel {
   _ViewModel(
       {this.selectedEndTimeFromStore,
       this.confirmSelectedDate,
-//       this.isView,
-//       this.isEdit,
       this.selectedDateFromStore,
       this.confirmStartTime,
       this.selectedStartTimeFromStore,
@@ -26,7 +21,7 @@ class _ViewModel {
 }
 
 class DatePickers extends StatelessWidget {
-  final selectedNoteData;
+  final List<String> selectedNoteData;
   final DateTime selectedDate = DateTime.now();
   final TimeOfDay selectedStartTime = TimeOfDay.now();
   final TimeOfDay selectedEndTime = TimeOfDay.now();
@@ -42,8 +37,6 @@ class DatePickers extends StatelessWidget {
           selectedDateFromStore: store.state.dates[0],
           confirmSelectedDate: (String data) =>
               store.dispatch(ConfirmDates(data)),
-//          isView: store.state.isView,
-//          isEdit: store.state.isEdit,
           confirmEndTime: (String data) => store.dispatch(ConfirmEndTime(data)),
           confirmStartTime: (String data) =>
               store.dispatch(ConfirmStartTime(data))),
@@ -51,91 +44,79 @@ class DatePickers extends StatelessWidget {
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            // state.isView
-            //     ?
-            // Column(
-            //     children: <Widget>[
-            //       Text('Date of service', style: TextStyle(fontSize: 16.0)),
-            //       Text('${selectedNoteData.first.serviceDate.toString()}'),
-            //     ],
-            //   )
-            // :
-            Column(
-              children: <Widget>[
-                Text('Date of service', style: TextStyle(fontSize: 16.0)),
-                Theme(
-                  data: ThemeData(
-                    accentColor: Colors.yellow,
+            this.selectedNoteData != null
+                ? Column(
+                    children: <Widget>[
+                      Text('Date of service', style: TextStyle(fontSize: 16.0)),
+                      Text('${selectedNoteData[0].toString()}'),
+                    ],
+                  )
+                : Column(
+                    children: <Widget>[
+                      Text('Date of service', style: TextStyle(fontSize: 16.0)),
+                      Theme(
+                        data: ThemeData(
+                          accentColor: Colors.yellow,
+                        ),
+                        child: IconButton(
+                          onPressed: () =>
+                              _selectDate(context, state.confirmSelectedDate),
+                          icon: Icon(Icons.calendar_today),
+                        ),
+                      ),
+                      state.selectedDateFromStore != null
+                          ? Text(state.selectedDateFromStore ??
+                              selectedDate.toString().substring(0, 10))
+                          : Text(DateTime.now().toString().substring(0, 10)),
+                    ],
                   ),
-                  child: IconButton(
-                    onPressed: () =>
-                        _selectDate(context, state.confirmSelectedDate),
-                    icon: Icon(Icons.calendar_today),
-                  ),
-                ),
-                state.selectedDateFromStore != null
-                    ? Text(state.selectedDateFromStore ??
-                        selectedDate.toString().substring(0, 10))
-                    : Text(selectedNoteData != null
-                        ? selectedNoteData.first.serviceDate
-                        : DateTime.now().toString().substring(0, 10)),
-              ],
-            ),
-            // state.isView
-            //     ? Column(
-            //         children: <Widget>[
-            //           Text('Start time', style: TextStyle(fontSize: 16.0)),
-            //           Text('${selectedNoteData.first.startTime.toString()}')
-            //         ],
-            //       )
-            //     :
-            Padding(
-              padding: EdgeInsets.only(right: 20.0),
-              child: Column(
-                children: <Widget>[
-                  Text('Start time', style: TextStyle(fontSize: 16.0)),
-                  IconButton(
-                    onPressed: () =>
-                        _selectStartTime(context, state.confirmStartTime),
-                    icon: Icon(Icons.timer),
-                  ),
-                  Text(selectedNoteData != null &&
-                          state.selectedStartTimeFromStore == null
-                      ? selectedNoteData.first.startTime
-                      : state.selectedStartTimeFromStore != null
-                          ? state.selectedStartTimeFromStore ??
-                              selectedDate.toString().substring(10, 15)
-                          : TimeOfDay.now().toString().substring(10, 15)),
-                ],
-              ),
-            ),
-            // state.isView
-            //     ? Column(
-            //         children: <Widget>[
-            //           Text('End time', style: TextStyle(fontSize: 16.0)),
-            //           Text('${selectedNoteData.first.endTime}'),
-            //         ],
-            //       )
-            //     :
-            Padding(
-                padding: EdgeInsets.only(right: 18.0),
-                child: Column(
-                  children: <Widget>[
-                    Text('End time', style: TextStyle(fontSize: 16.0)),
-                    IconButton(
-                      onPressed: () =>
-                          _selectEndTime(context, state.confirmEndTime),
-                      icon: Icon(Icons.timer),
+            this.selectedNoteData != null
+                ? Column(
+                    children: <Widget>[
+                      Text('Start time', style: TextStyle(fontSize: 16.0)),
+                      Text('${this.selectedNoteData[1].toString()}')
+                    ],
+                  )
+                : Padding(
+                    padding: EdgeInsets.only(right: 20.0),
+                    child: Column(
+                      children: <Widget>[
+                        Text('Start time', style: TextStyle(fontSize: 16.0)),
+                        IconButton(
+                          onPressed: () =>
+                              _selectStartTime(context, state.confirmStartTime),
+                          icon: Icon(Icons.timer),
+                        ),
+                        Text(state.selectedStartTimeFromStore != null
+                            ? state.selectedStartTimeFromStore ??
+                                selectedDate.toString().substring(10, 15)
+                            : TimeOfDay.now().toString().substring(10, 15)),
+                      ],
                     ),
-                    Text(selectedNoteData != null &&
-                            state.selectedEndTimeFromStore == null
-                        ? selectedNoteData.first.endTime
-                        : state.selectedEndTimeFromStore != null
+                  ),
+            this.selectedNoteData != null
+                ? Column(
+                    children: <Widget>[
+                      Text('End time', style: TextStyle(fontSize: 16.0)),
+                      Text('${this.selectedNoteData[2]}'),
+                    ],
+                  )
+                : Padding(
+                    padding: EdgeInsets.only(right: 18.0),
+                    child: Column(
+                      children: <Widget>[
+                        Text('End time', style: TextStyle(fontSize: 16.0)),
+                        IconButton(
+                          onPressed: () =>
+                              _selectEndTime(context, state.confirmEndTime),
+                          icon: Icon(Icons.timer),
+                        ),
+                        Text(state.selectedEndTimeFromStore != null
                             ? state.selectedEndTimeFromStore ??
                                 selectedDate.toString().substring(10, 15)
                             : TimeOfDay.now().toString().substring(10, 15)),
-                  ],
-                ))
+                      ],
+                    ))
           ],
         );
       },
@@ -154,26 +135,16 @@ class DatePickers extends StatelessWidget {
   }
 
   Future<Null> _selectStartTime(BuildContext context, confirmStartTime) async {
-    final TimeOfDay picked = await showTimePicker(
-        context: context,
-        initialTime:
-            // isEdit
-            // ? selectedNoteData.first.startTime.toString()
-            // :
-            TimeOfDay.now());
+    final TimeOfDay picked =
+        await showTimePicker(context: context, initialTime: TimeOfDay.now());
     if (picked != null && picked != selectedStartTime) {
       confirmStartTime(picked.toString().substring(10, 15));
     }
   }
 
   Future<Null> _selectEndTime(BuildContext context, confirmEndTime) async {
-    final TimeOfDay picked = await showTimePicker(
-        context: context,
-        initialTime:
-            // isEdit
-            // ? selectedNoteData.first.endTime
-            // :
-            TimeOfDay.now());
+    final TimeOfDay picked =
+        await showTimePicker(context: context, initialTime: TimeOfDay.now());
     if (picked != null && picked != selectedEndTime) {
       confirmEndTime(picked.toString().substring(10, 15));
     }

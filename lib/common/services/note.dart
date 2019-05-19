@@ -15,6 +15,17 @@ Future<List<Note>> getNotes(int id) async {
   }
 }
 
+Future<Note> getNote(int id) async {
+  http.Response response =
+      await http.get('http://localhost:3000/client/getNote?id=$id');
+  if (response.statusCode == 200) {
+    final res = json.decode(response.body);
+    return Note.fromJson(res['data']);
+  } else {
+    throw Exception('Failed to get notes');
+  }
+}
+
 Future<Null> createNote(Note note, BuildContext context, String diagnos) async {
   http.Response response = await http.post('http://localhost:3000/client/note',
       body: json.encode(
